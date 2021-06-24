@@ -9,6 +9,7 @@ end
 
 get '/:id' do
     hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
-    @title = hash[:text]
-    erb :index
+    @title = hash[:title]
+    @text = hash[:text]
+    erb :detail
 end
