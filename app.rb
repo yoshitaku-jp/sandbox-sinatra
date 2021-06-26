@@ -1,4 +1,5 @@
 require 'sinatra'
+require './memo'
 
 get '/' do
     hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
@@ -21,7 +22,8 @@ end
 
 post '/new' do
     p "new post"
-    p params[:title]
-    p params[:text]
+    memo = Memo.new(params[:title], params[:text])
+    p memo
     erb :new
 end
+
