@@ -1,5 +1,6 @@
 require 'sinatra'
 require './memo'
+require './memo_repository'
 
 get '/' do
     hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
@@ -23,7 +24,8 @@ end
 post '/new' do
     p "new post"
     memo = Memo.new(params[:title], params[:text])
-    p memo
+    memo_repo = MemoRepository.new()
+    memo_repo.save(memo)
     erb :new
 end
 

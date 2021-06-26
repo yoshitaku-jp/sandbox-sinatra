@@ -3,4 +3,11 @@ class Memo
         @title = title
         @text = text
     end
+
+    def getTitle()
+        @title
+    end
+    def getText()
+        @text
+    end
 end
