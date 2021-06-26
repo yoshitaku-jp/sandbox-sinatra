@@ -7,12 +7,13 @@ get '/' do
     erb :index
 end
 
-get '/:id' do
+get '/show/:id' do
     hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
     @title = hash[:title]
     @text = hash[:text]
     erb :detail
 end
+
 get '/new' do
     p "new get"
     erb :new
