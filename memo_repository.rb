@@ -18,4 +18,7 @@ class MemoRepository
           }
     end
 
+    def delete(memo)
+        File.delete(@directory + memo.getTitle + '.csv')
+    end
 end

@@ -29,3 +29,10 @@ post '/new' do
     erb :new
 end
 
+post '/delete' do
+    p "delete post"
+    memo = Memo.new(params[:title], params[:text])
+    memo_repo = MemoRepository.new()
+    memo_repo.delete(memo)
+    erb :new
+end
