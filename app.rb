@@ -13,3 +13,14 @@ get '/:id' do
     @text = hash[:text]
     erb :detail
 end
+get '/new' do
+    p "new get"
+    erb :new
+end
+
+post '/new' do
+    p "new post"
+    p params[:title]
+    p params[:text]
+    erb :new
+end
