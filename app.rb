@@ -1,6 +1,7 @@
 require 'sinatra'
 require './memo'
 require './memo_repository'
+include ERB::Util
 
 # Read
 
@@ -26,7 +27,9 @@ get '/new' do
 end
 
 post '/new' do
-    memo = Memo.new(params[:title], params[:text])
+    title = html_escape(params[:title])
+    text = html_escape(params[:text])
+    memo = Memo.new(title, text)
     memo_repo = MemoRepository.new()
     memo_repo.save(memo)
     redirect '/'
@@ -35,7 +38,8 @@ end
 # Edit
 
 get '/edit/:title' do
-    memo = Memo.new(params[:title])
+    title = html_escape(params[:title])
+    memo = Memo.new(title)
     memo_repo = MemoRepository.new()
     data = memo_repo.find(memo)
     @title = data[0][0]
@@ -46,9 +50,13 @@ end
 patch '/edit' do
     memo_repo = MemoRepository.new()
 
-    old_memo = Memo.new(params[:old_title], params[:old_text])
+    old_title = html_escape(params[:old_title])
+    old_text = html_escape(params[:old_text])
+    old_memo = Memo.new(old_title, old_text)
     memo_repo.del(old_memo)
 
+    title = html_escape(params[:title])
+    text = html_escape(params[:text])
     memo = Memo.new(params[:title], params[:text])
     memo_repo.save(memo)
     erb :edit
