@@ -9,6 +9,10 @@ class MemoRepository
     end
 
     def findAll
+        filelists = Dir.children(@directory)
+        filelists = filelists.map{|filename| filename.split('.')[0]}
+        filelists
+    end
         
     end
 
