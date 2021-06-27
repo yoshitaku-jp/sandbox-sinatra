@@ -1,8 +1,7 @@
 <h2><%= @title %></h2>
 <p><%= @text %></p>
 
-<button>変更</button>
-<form action="/delete" method="POST">
+<input type="button"  onclick="location.href='/edit/<%= @title %>'" value="変更">
  <input type="hidden" name="title" value="<%= @title %>">
  <input type="hidden" name="text" value="<%= @text %>">
  <button type="submit" class="btn">削除</button>
