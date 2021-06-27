@@ -27,6 +27,8 @@ post '/new' do
     memo = Memo.new(params[:title], params[:text])
     memo_repo = MemoRepository.new()
     memo_repo.save(memo)
+    redirect '/'
+end
 get '/edit/:title' do
     memo = Memo.new(params[:title])
     memo_repo = MemoRepository.new()
