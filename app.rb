@@ -2,6 +2,8 @@ require 'sinatra'
 require './memo'
 require './memo_repository'
 
+# Read
+
 get '/' do
     memo_repo = MemoRepository.new()
     @filelists = memo_repo.findAll()
@@ -17,18 +19,21 @@ get '/show/:title' do
     erb :detail
 end
 
+# New
+
 get '/new' do
-    p "new get"
     erb :new
 end
 
 post '/new' do
-    p "new post"
     memo = Memo.new(params[:title], params[:text])
     memo_repo = MemoRepository.new()
     memo_repo.save(memo)
     redirect '/'
 end
+
+# Edit
+
 get '/edit/:title' do
     memo = Memo.new(params[:title])
     memo_repo = MemoRepository.new()
@@ -48,6 +53,9 @@ patch '/edit' do
     memo_repo.save(memo)
     erb :edit
 end
+
+# Delete
+
 delete '/delete/:title' do
     memo = Memo.new(params[:title])
     memo_repo = MemoRepository.new()
