@@ -27,12 +27,25 @@ post '/new' do
     memo = Memo.new(params[:title], params[:text])
     memo_repo = MemoRepository.new()
     memo_repo.save(memo)
-    erb :new
+get '/edit/:title' do
+    memo = Memo.new(params[:title])
+    memo_repo = MemoRepository.new()
+    data = memo_repo.find(memo)
+    @title = data[0][0]
+    @text = data[0][1]
+    erb :edit
 end
 
-post '/delete' do
-    p "delete post"
+patch '/edit' do
+    memo_repo = MemoRepository.new()
+
+    old_memo = Memo.new(params[:old_title], params[:old_text])
+    memo_repo.del(old_memo)
+
     memo = Memo.new(params[:title], params[:text])
+    memo_repo.save(memo)
+    erb :edit
+end
     memo_repo = MemoRepository.new()
 
 # 404

@@ -1,0 +1,9 @@
+<form action="/edit" method="POST">
+ <input type="input" name="title" value="<%= @title %>">
+ <input type="input" name="text" value="<%= @text %>">
+ <input type="hidden" name="old_title" value="<%= @title %>">
+ <input type="hidden" name="old_text" value="<%= @text %>">
+ <input type="hidden" name="_method" value="PATCH">
+ <button type="submit" class="btn">保存</button>
+</form>
+
