@@ -7,7 +7,7 @@ include ERB::Util
 
 get '/' do
   memo_repo = MemoRepository.new
-  @filelists = memo_repo.findAll
+  @filelists = memo_repo.find_all
   erb :index
 end
 

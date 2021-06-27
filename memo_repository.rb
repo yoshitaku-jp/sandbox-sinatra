@@ -12,14 +12,14 @@ class MemoRepository
   end
 
   def find(memo)
-    CSV.read("#{@directory}#{memo.getTitle}.csv")
+    CSV.read("#{@directory}#{memo.title}.csv")
   end
 
   def save(memo)
-    CSV.open("#{@directory}#{memo.getTitle}.csv", 'w') { |csv| csv << [memo.getTitle, memo.getText] }
+    CSV.open("#{@directory}#{memo.title}.csv", 'w') { |csv| csv << [memo.title, memo.text] }
   end
 
   def del(memo)
-    File.delete("#{@directory}#{memo.getTitle}.csv")
+    File.delete("#{@directory}#{memo.title}.csv")
   end
 end
