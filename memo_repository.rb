@@ -13,7 +13,10 @@ class MemoRepository
         filelists = filelists.map{|filename| filename.split('.')[0]}
         filelists
     end
-        
+
+    def find(memo)
+        data = CSV.read(@directory + memo.getTitle + '.csv')
+        data
     end
 
     def save(memo)
