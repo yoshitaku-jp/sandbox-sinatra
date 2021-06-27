@@ -1,13 +1,8 @@
 class Memo
-    def initialize(title, text="")
-        @title = title
-        @text = text
-    end
+  def initialize(title, text = '')
+    @title = title
+    @text = text
+  end
 
-    def getTitle()
-        @title
-    end
-    def getText()
-        @text
-    end
+  attr_reader :title, :text
 end
