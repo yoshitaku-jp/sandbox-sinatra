@@ -46,7 +46,12 @@ patch '/edit' do
     memo_repo.save(memo)
     erb :edit
 end
+delete '/delete/:title' do
+    memo = Memo.new(params[:title])
     memo_repo = MemoRepository.new()
+    memo_repo.del(memo)
+    redirect '/'
+end
 
 # 404
 
