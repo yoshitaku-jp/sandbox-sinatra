@@ -3,9 +3,8 @@ require './memo'
 require './memo_repository'
 
 get '/' do
-    hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
-    @id = hash[:id]
-    @title = hash[:title]
+    memo_repo = MemoRepository.new()
+    @filelists = memo_repo.findAll()
     erb :index
 end
 
