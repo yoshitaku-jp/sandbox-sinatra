@@ -8,10 +8,12 @@ get '/' do
     erb :index
 end
 
-get '/show/:id' do
-    hash = {"id":1,"title": "メモ","text": "コレはメモの中身です"}
-    @title = hash[:title]
-    @text = hash[:text]
+get '/show/:title' do
+    memo = Memo.new(params[:title])
+    memo_repo = MemoRepository.new()
+    data = memo_repo.find(memo)
+    @title = data[0][0]
+    @text = data[0][1]
     erb :detail
 end
 
