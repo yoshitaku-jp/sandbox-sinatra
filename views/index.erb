@@ -1,3 +1,6 @@
+<% @filelists.each do |filename| %>
+    <li><a href=<%= "/show/#{filename}" %>><%= filename %></a></li>
+<%end%>
 
 <li><a href=<%= "/show/#{@id}" %>><%= @title %></li>
 <a href="/new">追加</a>
