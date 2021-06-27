@@ -33,6 +33,9 @@ post '/delete' do
     p "delete post"
     memo = Memo.new(params[:title], params[:text])
     memo_repo = MemoRepository.new()
-    memo_repo.delete(memo)
-    erb :new
+
+# 404
+
+not_found do
+    erb :not_found
 end
