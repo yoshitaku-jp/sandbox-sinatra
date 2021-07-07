@@ -27,10 +27,10 @@ class MemoRepository
   end
 
   def save(memo)
-    CSV.open("#{@directory}#{memo.title}.csv", 'w') { |csv| csv << [memo.title, memo.text] }
+    CSV.open("#{@directory}#{memo.uuid}.csv", 'w') { |csv| csv << [memo.title, memo.text] }
   end
 
-  def del(memo)
-    File.delete("#{@directory}#{memo.title}.csv")
+  def del(filename)
+    File.delete("#{@directory}#{filename}.csv")
   end
 end

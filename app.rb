@@ -63,9 +63,8 @@ end
 # Delete
 
 delete '/delete/:title' do
-  memo = Memo.new(params[:title])
   memo_repo = MemoRepository.new
-  memo_repo.del(memo)
+  memo_repo.del(params[:filename])
   redirect '/'
 end
 
