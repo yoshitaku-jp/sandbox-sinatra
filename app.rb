@@ -36,28 +36,27 @@ end
 
 # Edit
 
-get '/edit/:title' do
-  title = params[:title]
-  memo = Memo.new(title)
+get '/edit/:filename' do
   memo_repo = MemoRepository.new
-  data = memo_repo.find(memo)
-  @title = data[0][0]
-  @text = data[0][1]
+  memo = memo_repo.find(params[:filename])
+  @filename = params[:filename]
+  @title = memo[0][0]
+  @text = memo[0][1]
   erb :edit
 end
 
 patch '/edit' do
   memo_repo = MemoRepository.new
 
-  old_title = params[:old_title]
-  old_text = params[:old_text]
-  old_memo = Memo.new(old_title, old_text)
-  memo_repo.del(old_memo)
+  # 削除処理
+  memo_repo.del(params[:filename])
 
+  # 新規作成処理
   title = params[:title]
   text = params[:text]
   memo = Memo.new(title, text)
   memo_repo.save(memo)
+
   erb :edit
 end
 
