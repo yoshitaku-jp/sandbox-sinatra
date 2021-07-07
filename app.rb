@@ -6,16 +6,16 @@ require './memo_repository'
 
 get '/' do
   memo_repo = MemoRepository.new
-  @filelists = memo_repo.find_all
+  @files = memo_repo.find_all
   erb :index
 end
 
-get '/show/:title' do
-  memo = Memo.new(params[:title])
+get '/show/:filename' do
   memo_repo = MemoRepository.new
-  data = memo_repo.find(memo)
-  @title = data[0][0]
-  @text = data[0][1]
+  memo = memo_repo.find(params[:filename])
+  @filename = params[:filename]
+  @title = memo[0][0]
+  @text = memo[0][1]
   erb :detail
 end
 

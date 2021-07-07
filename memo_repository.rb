@@ -7,12 +7,23 @@ class MemoRepository
   end
 
   def find_all
-    filelists = Dir.children(@directory)
-    filelists.map { |filename| filename.split('.')[0] }
+    dir_files = Dir.children(@directory)
+
+    files = []
+    dir_files.each do |file|
+      next if file[0] == '.'
+      file_info = []
+      file_info << file.split('.')[0]
+
+      data = CSV.read("#{@directory}#{file}")
+      file_info << data[0][0]
+      files << file_info
+    end
+    files
   end
 
-  def find(memo)
-    CSV.read("#{@directory}#{memo.title}.csv")
+  def find(filename)
+    CSV.read("#{@directory}#{filename}.csv")
   end
 
   def save(memo)

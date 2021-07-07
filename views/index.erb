@@ -1,5 +1,5 @@
-<% @filelists.each do |filename| %>
-    <li><a href=<%= "/show/#{filename}" %>><%= filename %></a></li>
+<% @files.each do |file| %>
+    <li><a href=<%= "/show/#{file[0]}" %>><%= file[1] %></a></li>
 <%end%>
 
 <input type="button" onclick="location.href='/new'" value='追加'>
