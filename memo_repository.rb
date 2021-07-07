@@ -12,6 +12,7 @@ class MemoRepository
     files = []
     dir_files.each do |file|
       next if file[0] == '.'
+
       file_info = []
       file_info << file.split('.')[0]
 
