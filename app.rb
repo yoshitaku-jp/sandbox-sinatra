@@ -1,6 +1,8 @@
 require 'sinatra'
 require './memo'
 require './memo_repository'
+require './helpers/helpers'
+
 
 # Read
 

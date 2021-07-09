@@ -1,5 +1,5 @@
-<h2><%= @title %></h2>
-<p><%= @text %></p>
+<h2><%= h @title %></h2>
+<p><%= h @text %></p>
 
 <input type="button"  onclick="location.href='/edit/<%= @filename %>'" value="変更">
 <form action=<%= "/delete/#{@title}"%> method="POST">
