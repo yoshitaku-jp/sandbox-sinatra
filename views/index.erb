@@ -1,5 +1,5 @@
-<% @files.each do |file| %>
-    <li><a href=<%= "/show/#{h file[0]}" %>><%= h file[1] %></a></li>
+<% @memos.each do |memo| %>
+    <li><a href=<%= "/show/#{h memo.uuid}" %>><%= h memo.title %></a></li>
 <%end%>
 
 <input type="button" onclick="location.href='/new'" value='追加'>

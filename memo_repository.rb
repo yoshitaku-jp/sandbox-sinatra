@@ -7,24 +7,26 @@ class MemoRepository
   end
 
   def find_all
-    dir_files = Dir.children(@directory)
+    dir_csvs = Dir.glob("#{@directory}*.csv")
 
-    files = []
-    dir_files.each do |file|
-      next if file[0] == '.'
-
-      file_info = []
-      file_info << file.split('.')[0]
-
-      data = CSV.read("#{@directory}#{file}")
-      file_info << data[0][0]
-      files << file_info
+    memos = []
+    dir_csvs.each do |file|
+      memo = ''
+      filename = file.split('/')[2].split('.')[0]
+      CSV.foreach(file) do |row|
+        memo = Memo.new(filename, row[0], row[1])
+      end
+      memos << memo
     end
-    files
+    memos
   end
 
   def find(filename)
-    CSV.read("#{@directory}#{filename}.csv")
+    memo = ''
+    CSV.foreach("#{@directory}#{filename}.csv") do |row|
+      memo = Memo.new(row[0], row[1])
+    end
+    memo
   end
 
   def save(memo)

@@ -3,21 +3,21 @@ require './memo'
 require './memo_repository'
 require './helpers/helpers'
 
-
 # Read
 
 get '/' do
   memo_repo = MemoRepository.new
-  @files = memo_repo.find_all
+  @memos = memo_repo.find_all
   erb :index
 end
 
 get '/show/:filename' do
   memo_repo = MemoRepository.new
   memo = memo_repo.find(params[:filename])
+
   @filename = params[:filename]
-  @title = memo[0][0]
-  @text = memo[0][1]
+  @title = memo.title
+  @text = memo.text
   erb :detail
 end
 
@@ -42,8 +42,8 @@ get '/edit/:filename' do
   memo_repo = MemoRepository.new
   memo = memo_repo.find(params[:filename])
   @filename = params[:filename]
-  @title = memo[0][0]
-  @text = memo[0][1]
+  @title = memo.title
+  @text = memo.text
   erb :edit
 end
 

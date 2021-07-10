@@ -1,6 +1,6 @@
 class Memo
-  def initialize(title, text = '')
-    @uuid = SecureRandom.uuid
+  def initialize(uuid = SecureRandom.uuid, title, text)
+    @uuid = uuid
     @title = title
     @text = text
   end
