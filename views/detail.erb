@@ -1,0 +1,12 @@
+<h2><%= h @title %></h2>
+<p><%= h @text %></p>
+
+<input type="button"  onclick="location.href='/edit/<%= @filename %>'" value="変更">
+<form action=<%= "/delete/#{@title}"%> method="POST">
+ <input type="hidden" name="filename" value="<%= @filename %>">
+ <input type="hidden" name="title" value="<%= @title %>">
+ <input type="hidden" name="text" value="<%= @text %>">
+ <input type="hidden" name="_method" value="DELETE">
+ <input type="submit" value="削除">
+</form>
+
