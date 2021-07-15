@@ -1,0 +1,8 @@
+<form action="/edit" method="POST">
+ <input type="input" name="title" value="<%= h @title %>">
+ <input type="input" name="text" value="<%= h @text %>">
+ <input type="hidden" name="filename" value="<%= h @filename %>">
+ <input type="hidden" name="_method" value="PATCH">
+ <button type="submit" class="btn">保存</button>
+</form>
+
