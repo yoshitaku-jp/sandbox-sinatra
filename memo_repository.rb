@@ -12,6 +12,7 @@ class MemoRepository
     memos = []
     dir_csvs.each do |file|
       memo = nil
+      filename = File.basename(file, '.csv')
       CSV.foreach(file) do |row|
         memo = Memo.new(filename, row[0], row[1])
       end
