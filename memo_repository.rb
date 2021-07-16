@@ -1,39 +1,43 @@
 require './memo'
-require 'csv'
+require 'pg'
 
 class MemoRepository
-  def initialize
-    @directory = './database/'
-  end
+  def initialize; end
 
   def find_all
-    dir_csvs = Dir.glob("#{@directory}*.csv")
+    connection = PG.connect(host: 'localhost', user: 'admin', password: 'admin', dbname: 'memos',
+                            port: '15432')
+    result = connection.exec('SELECT uuid, title,text FROM memo')
 
     memos = []
-    dir_csvs.each do |file|
-      memo = nil
-      filename = File.basename(file, '.csv')
-      CSV.foreach(file) do |row|
-        memo = Memo.new(filename, row[0], row[1])
-      end
-      memos << memo
+    result.each do |memo|
+      memos << Memo.new(memo['uuid'], memo['title'], memo['text'])
     end
     memos
   end
 
   def find(filename)
-    memo = ''
-    CSV.foreach("#{@directory}#{filename}.csv") do |row|
-      memo = Memo.new(row[0], row[1])
+    connection = PG.connect(host: 'localhost', user: 'admin', password: 'admin', dbname: 'memos', port: '15432')
+    result = connection.exec('SELECT title,text FROM memo WHERE uuid = $1', [filename])
+    memo = nil
+    result.each do |cur|
+      memo = Memo.new(cur['title'], cur['text'])
     end
     memo
   end
 
   def save(memo)
-    CSV.open("#{@directory}#{memo.uuid}.csv", 'w') { |csv| csv << [memo.title, memo.text] }
+    connection = PG.connect(host: 'localhost', user: 'admin', password: 'admin', dbname: 'memos', port: '15432')
+    connection.exec('INSERT INTO memo (uuid,title,text) VALUES ($1, $2, $3)', [memo.uuid, memo.title, memo.text])
+  end
+
+  def update(_filename)
+    connection = PG.connect(host: 'localhost', user: 'admin', password: 'admin', dbname: 'memos', port: '15432')
+    connection.exec('UPDATE memo SET title = $2,text = $3 WHERE uuid = $1', [memo.uuid, memo.title, memo.text])
   end
 
   def del(filename)
-    File.delete("#{@directory}#{filename}.csv")
+    connection = PG.connect(host: 'localhost', user: 'admin', password: 'admin', dbname: 'memos', port: '15432')
+    connection.exec('DELETE FROM memo WHERE uuid = $1', [filename])
   end
 end
