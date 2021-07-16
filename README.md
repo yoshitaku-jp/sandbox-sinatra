@@ -10,4 +10,18 @@
 
 ## 実行
 
+`docker compose up`でデータベースを起動する。
+
+テーブルを作成する。
+
+```
+CREATE DATABASE memos;
+
+CREATE TABLE public.memo (
+	uuid uuid NULL,
+	title varchar NULL,
+	"text" varchar NULL
+);
+```
+
 `bundle exec ruby app.rb`を実行すると起動
