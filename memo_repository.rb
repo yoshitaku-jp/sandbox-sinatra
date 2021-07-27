@@ -13,9 +13,7 @@ class MemoRepository
     connection = get_connection
     result = connection.exec('SELECT uuid, title,text FROM memo')
     memos = []
-    result.each do |memo|
-      memos << Memo.new(memo['uuid'], memo['title'], memo['text'])
-    end
+    result.map { |memo| memos << Memo.new(memo['uuid'], memo['title'], memo['text']) }
     memos
   ensure
     connection = nil
