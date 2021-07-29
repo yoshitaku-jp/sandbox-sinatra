@@ -16,7 +16,7 @@ class MemoRepository
     result.map { |memo| memos << Memo.new(memo['uuid'], memo['title'], memo['text']) }
     memos
   ensure
-    connection = nil
+    connection.close
   end
 
   def find(filename)
@@ -27,26 +27,28 @@ class MemoRepository
       memo = Memo.new(cur['title'], cur['text'])
     end
     memo
+  ensure
+    connection.close
   end
 
   def save(memo)
     connection = get_connection
     connection.exec('INSERT INTO memo (uuid,title,text) VALUES ($1, $2, $3)', [memo.uuid, memo.title, memo.text])
   ensure
-    connection = nil
+    connection.close
   end
 
   def update(_filename)
     connection = get_connection
     connection.exec('UPDATE memo SET title = $2,text = $3 WHERE uuid = $1', [memo.uuid, memo.title, memo.text])
   ensure
-    connection = nil
+    connection.close
   end
 
   def del(filename)
     connection = get_connection
     connection.exec('DELETE FROM memo WHERE uuid = $1', [filename])
   ensure
-    connection = nil
+    connection.close
   end
 end
