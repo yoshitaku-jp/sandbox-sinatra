@@ -1,39 +1,54 @@
 require './memo'
-require 'csv'
+require 'pg'
 
 class MemoRepository
-  def initialize
-    @directory = './database/'
+  def initialize; end
+
+  def get_connection
+    connection = PG.connect(host: ENV['HOST_SINATRA'], user: ENV['USER_SINATRA'], password: ENV['PASSWORD_SINATRA'], dbname: ENV['DBNAME_SINATRA'],
+                            port: ENV['PORT_SINATRA'])
   end
 
   def find_all
-    dir_csvs = Dir.glob("#{@directory}*.csv")
-
+    connection = get_connection
+    result = connection.exec('SELECT uuid, title,text FROM memo')
     memos = []
-    dir_csvs.each do |file|
-      memo = nil
-      filename = File.basename(file, '.csv')
-      CSV.foreach(file) do |row|
-        memo = Memo.new(filename, row[0], row[1])
-      end
-      memos << memo
-    end
+    result.map { |memo| memos << Memo.new(memo['uuid'], memo['title'], memo['text']) }
     memos
+  ensure
+    connection.close
   end
 
   def find(filename)
-    memo = ''
-    CSV.foreach("#{@directory}#{filename}.csv") do |row|
-      memo = Memo.new(row[0], row[1])
+    connection = get_connection
+    result = connection.exec('SELECT title,text FROM memo WHERE uuid = $1', [filename])
+    memo = nil
+    result.each do |cur|
+      memo = Memo.new(cur['title'], cur['text'])
     end
     memo
+  ensure
+    connection.close
   end
 
   def save(memo)
-    CSV.open("#{@directory}#{memo.uuid}.csv", 'w') { |csv| csv << [memo.title, memo.text] }
+    connection = get_connection
+    connection.exec('INSERT INTO memo (uuid,title,text) VALUES ($1, $2, $3)', [memo.uuid, memo.title, memo.text])
+  ensure
+    connection.close
+  end
+
+  def update(_filename)
+    connection = get_connection
+    connection.exec('UPDATE memo SET title = $2,text = $3 WHERE uuid = $1', [memo.uuid, memo.title, memo.text])
+  ensure
+    connection.close
   end
 
   def del(filename)
-    File.delete("#{@directory}#{filename}.csv")
+    connection = get_connection
+    connection.exec('DELETE FROM memo WHERE uuid = $1', [filename])
+  ensure
+    connection.close
   end
 end
